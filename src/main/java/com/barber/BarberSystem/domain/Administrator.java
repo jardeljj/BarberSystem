@@ -1,5 +1,6 @@
 package com.barber.BarberSystem.domain;
 
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
