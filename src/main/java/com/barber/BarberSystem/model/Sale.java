@@ -1,4 +1,4 @@
-package com.barber.BarberSystem.domain;
+package com.barber.BarberSystem.model;
 
 import jakarta.persistence.*;
 import lombok.*;

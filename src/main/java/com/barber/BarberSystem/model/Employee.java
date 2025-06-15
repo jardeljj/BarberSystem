@@ -1,5 +1,4 @@
-package com.barber.BarberSystem.domain;
-
+package com.barber.BarberSystem.model;
 
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
@@ -12,8 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Client extends User{
-
-    // Campos específicos de cliente (se houver no futuro)
+public class Employee extends User{
+    private String position;
+    // Ex: turno, etc. (se necessário futuramente)
 
 }

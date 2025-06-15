@@ -1,4 +1,4 @@
-package com.barber.BarberSystem.domain;
+package com.barber.BarberSystem.model;
 
 public enum UserRole {
     CLIENT,
