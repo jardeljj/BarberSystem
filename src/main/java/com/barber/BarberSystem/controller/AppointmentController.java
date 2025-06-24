@@ -18,18 +18,21 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
+    //create a new appointment
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> createAppointment(@RequestBody AppointmentRequestDTO dto){
         AppointmentResponseDTO created = appointmentService.createAppointment(dto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
+    // search to all appointments
     @GetMapping
     public ResponseEntity<List<AppointmentResponseDTO>> getAllAppointments(){
         List<AppointmentResponseDTO> appointments = appointmentService.getAllAppointments();
         return ResponseEntity.ok(appointments);
     }
 
+    // search to appointment by id
     @GetMapping("/{id}")
     public ResponseEntity<AppointmentResponseDTO> getAppointmentById(@PathVariable Long id){
         return appointmentService.getAppointmentById(id)
@@ -37,6 +40,7 @@ public class AppointmentController {
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id: " + id));
     }
 
+    // updating a appointment by id
     @PutMapping("/{id}")
     public ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable Long id, @RequestBody AppointmentRequestDTO dto){
         return appointmentService.updateAppointment(id, dto)
@@ -44,6 +48,7 @@ public class AppointmentController {
                 .orElseThrow(() -> new ResourceNotFoundException("Appointment not found with id" + id));
     }
 
+    // deleting a appointment by id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAppointment(@PathVariable Long id){
         appointmentService.deleteAppointment(id);
