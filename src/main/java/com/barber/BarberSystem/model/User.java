@@ -19,7 +19,7 @@ public abstract class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String Name;
+    private String name;
     private String email;
     private String password;
 
