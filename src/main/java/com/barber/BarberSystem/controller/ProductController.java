@@ -19,18 +19,21 @@ public class ProductController {
 
     private final ProductService productService;
 
+    // create a new product
     @PostMapping
     public ResponseEntity<ProductResponseDTO> createProduct(@RequestBody ProductRequestDTO dto){
         ProductResponseDTO created = productService.createProduct(dto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
+    // search to all products
     @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> getAllProducts(){
         List<ProductResponseDTO> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
     }
 
+    // search a product by id
     @GetMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable Long id){
         return productService.getProductById(id)
@@ -38,6 +41,7 @@ public class ProductController {
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
     }
 
+    // updating a product by id
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDTO dto){
         return productService.updateProduct(id, dto)
@@ -45,6 +49,7 @@ public class ProductController {
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
     }
 
+    // deleting a product by id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);

@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SaleResponseDTO {
     private Long id;
-    private String clientName;
+    private Long clientId;
     private List<SaleItemDTO> items;
     private LocalDateTime saleDate;
-    private double totalAmount;
+    private double totalPrice;
 }

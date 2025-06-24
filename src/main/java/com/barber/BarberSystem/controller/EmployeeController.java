@@ -18,18 +18,21 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
+    // create a new employee
     @PostMapping
     public ResponseEntity<EmployeeResponseDTO> createEmployee(@RequestBody EmployeeRequestDTO dto){
         EmployeeResponseDTO created = employeeService.createEmployee(dto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
+    // search all employees
     @GetMapping
     public ResponseEntity<List<EmployeeResponseDTO>> getAllEmployees(){
         List<EmployeeResponseDTO> employees = employeeService.getAllEmployees();
         return ResponseEntity.ok(employees);
     }
 
+    // search a employee by id
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeResponseDTO> getEmployeeById(@PathVariable Long id){
         return employeeService.getEmployeeById(id)
@@ -37,6 +40,7 @@ public class EmployeeController {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
     }
 
+    // updating a employee by id
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeResponseDTO> updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequestDTO dto){
         return employeeService.updateEmployee(id, dto)
@@ -44,6 +48,7 @@ public class EmployeeController {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id: " + id));
     }
 
+    // deleting a employee by id
     @DeleteMapping("/{id}")
     public ResponseEntity<EmployeeResponseDTO> deleteEmployee(@PathVariable Long id){
         employeeService.deleteEmployee(id);

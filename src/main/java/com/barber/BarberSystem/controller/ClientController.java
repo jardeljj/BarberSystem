@@ -17,18 +17,21 @@ public class ClientController {
 
     private final ClientService clientService;
 
+    // create a new client
     @PostMapping
     public ResponseEntity<ClientResponseDTO> createClient(@RequestBody ClientRequestDTO dto){
         ClientResponseDTO createdClient = clientService.createClient(dto);
         return new ResponseEntity<>(createdClient, HttpStatus.CREATED);
     }
 
+    // search all clients
     @GetMapping
     public ResponseEntity<List<ClientResponseDTO>> getAllClients(){
         List<ClientResponseDTO> clients = clientService.getAllClients();
         return ResponseEntity.ok(clients);
     }
 
+    // search clients by id
     @GetMapping("/{id}")
     public ResponseEntity<ClientResponseDTO> getClientById(@PathVariable Long id) {
         return clientService.getClientById(id)
@@ -36,6 +39,7 @@ public class ClientController {
                 .orElseThrow(() -> new com.barber.BarberSystem.exception.ResourceNotFoundException("Client not found with id: " + id));
     }
 
+    // updating a clint by id
     @PutMapping("/{id}")
     public ResponseEntity<ClientResponseDTO> updateClient(@PathVariable Long id, @RequestBody ClientRequestDTO dto) {
         return clientService.updateClient(id, dto)
@@ -43,6 +47,7 @@ public class ClientController {
                 .orElseThrow(() -> new com.barber.BarberSystem.exception.ResourceNotFoundException("Client not found with id: " + id));
     }
 
+    // deleting a client by id
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
         clientService.deleteClient(id);
