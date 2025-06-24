@@ -12,4 +12,6 @@ public class EmployeeResponseDTO {
     private String name;
     private String email;
     private String position;
+    private String phoneNumber;
+    private AddressDTO address;
 }

@@ -14,6 +14,6 @@ public class EmployeeRequestDTO {
     private String password;
     private String position;  // Cargo do funcionário
     private AddressDTO address;
-
+    private String phoneNumber;
 
 }
