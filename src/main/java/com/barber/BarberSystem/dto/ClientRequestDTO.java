@@ -12,6 +12,7 @@ public class ClientRequestDTO {
     private String name;
     private String email;
     private String password;
+    private String PhoneNumber;
     private AddressDTO address;
 
 }
