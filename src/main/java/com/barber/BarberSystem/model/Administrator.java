@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Administrator {
+public class Administrator extends User {
 
     // Pode não ter campos extras, só permissões maiores
 
