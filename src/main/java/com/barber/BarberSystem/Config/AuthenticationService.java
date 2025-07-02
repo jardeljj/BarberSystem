@@ -7,21 +7,24 @@ import com.barber.BarberSystem.model.Administrator;
 import com.barber.BarberSystem.model.Client;
 import com.barber.BarberSystem.model.Employee;
 import com.barber.BarberSystem.model.User;
-import com.barber.BarberSystem.repository.UserRepository;
+import com.barber.BarberSystem.repository.AdministratorRepository;
+import com.barber.BarberSystem.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ClientRepository clientRepository;
+    private final AdministratorRepository administratorRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
@@ -35,13 +38,19 @@ public class AuthenticationService {
                             request.getPassword()
                     )
             );
-            // Busca o usuário pelo email
-            User user = userRepository.findByEmail(request.getEmail())
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+            // Tenta buscar o usuário nos dois repositórios
+            Optional<Client> client = clientRepository.findByEmail(request.getEmail());
+            Optional<Administrator> admin = administratorRepository.findByEmail(request.getEmail());
 
-            // Gera o token JWT
-            String jwtToken = jwtService.generateToken(user);
-            return new LoginResponse(jwtToken);
+            if (client.isPresent()) {
+                String jwtToken = jwtService.generateToken(client.get());
+                return new LoginResponse(jwtToken);
+            } else if (admin.isPresent()) {
+                String jwtToken = jwtService.generateToken(admin.get());
+                return new LoginResponse(jwtToken);
+            } else {
+                throw new RuntimeException("User not found");
+            }
 
         } catch (AuthenticationException ex) {
             throw new RuntimeException("Invalid credentials");
@@ -60,7 +69,7 @@ public class AuthenticationService {
         }
         user.setName(request.getName());
         user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPhoneNumber(request.getPhoneNumber());
 
         user.setStreet(request.getStreet());
@@ -71,7 +80,12 @@ public class AuthenticationService {
         user.setPostalCode(request.getPostalCode());
 
         user.setRole(request.getRole());
-        userRepository.save(user);
+        // Salvar no repositório correspondente
+        switch (request.getRole()) {
+            case CLIENT -> clientRepository.save((Client) user);
+            case EMPLOYEE -> throw new UnsupportedOperationException("Registering employee not implemented yet");
+            case ADMIN -> administratorRepository.save((Administrator) user);
+        }
 
         String jwtToken = jwtService.generateToken(user);
         return new LoginResponse(jwtToken);
