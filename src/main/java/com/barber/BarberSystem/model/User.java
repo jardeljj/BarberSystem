@@ -43,9 +43,10 @@ public abstract class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(
-                (GrantedAuthority) () -> this.role.name()
+                (GrantedAuthority) () -> "ROLE_" + this.role.name()
         );
     }
+
 
     @Override
     public String getUsername() {

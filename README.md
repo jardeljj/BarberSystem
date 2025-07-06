@@ -23,7 +23,7 @@ Este projeto é uma aplicação web backend para gerenciamento de uma barbearia,
 
 - ✅ Modelagem de entidades
 - ✅ Criação dos repositórios (Camada de acesso a dados)
-- ⏳ Configuração de autenticação e segurança com JWT
+- ✅ Configuração de autenticação e segurança com JWT
 - ⏳ Camada de serviços e controladores (REST API)
 - ⏳ Validações, regras de negócio e DTOs
 - ⏳ Documentação com Swagger

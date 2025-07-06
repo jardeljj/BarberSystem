@@ -24,6 +24,15 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**", "/public/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+
+                        // rotas ADMIN
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        // rotas EMPLOYEE e ADMIN
+                        .requestMatchers("/employee/**").hasAnyRole("EMPLOYEE", "ADMIN")
+
+                        // rotas CLIENT
+                        .requestMatchers("/client/**").hasRole("CLIENT")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
