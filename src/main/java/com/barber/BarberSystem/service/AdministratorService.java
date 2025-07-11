@@ -27,7 +27,7 @@ public class AdministratorService {
         admin.setPassword(dto.getPassword());
         admin.setPhoneNumber(dto.getPhoneNumber());
         admin.setRole(UserRole.ADMIN);
-        mapAddressToDTO(admin, dto.getAddress());
+        mapAddressFromDTO(admin, dto.getAddress());
 
         Administrator saved = administratorRepository.save(admin);
         return toResponseDTO(saved);
