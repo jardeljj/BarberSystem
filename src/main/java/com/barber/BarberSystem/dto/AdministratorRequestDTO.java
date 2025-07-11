@@ -11,5 +11,6 @@ public class AdministratorRequestDTO {
     private String name;
     private String email;
     private String password;
+    private String phoneNumber;
     private AddressDTO address;
 }

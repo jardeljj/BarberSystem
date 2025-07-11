@@ -8,6 +8,7 @@ import com.barber.BarberSystem.model.Employee;
 import com.barber.BarberSystem.model.UserRole;
 import com.barber.BarberSystem.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,12 +20,13 @@ import java.util.stream.Collectors;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public EmployeeResponseDTO createEmployee(EmployeeRequestDTO dto){
         Employee employee = new Employee();
         employee.setName(dto.getName());
         employee.setEmail(dto.getEmail());
-        employee.setPassword(dto.getPassword());
+        employee.setPassword(passwordEncoder.encode(dto.getPassword()));
         employee.setPhoneNumber(dto.getPhoneNumber());
         employee.setRole(UserRole.EMPLOYEE);
         employee.setPosition(dto.getPosition());
@@ -51,7 +53,7 @@ public class EmployeeService {
         return employeeRepository.findById(id).map(employee -> {
             employee.setName(dto.getName());
             employee.setEmail(dto.getEmail());
-            employee.setPassword(dto.getPassword());
+            employee.setPassword(passwordEncoder.encode(dto.getPassword()));
             employee.setPhoneNumber(dto.getPhoneNumber());
             employee.setPosition(dto.getPosition());
             mapAddressFromDTO(employee, dto.getAddress());

@@ -20,6 +20,7 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
 
+
     // Create a new client
     public ClientResponseDTO createClient(ClientRequestDTO dto){
         Client client = new Client();
